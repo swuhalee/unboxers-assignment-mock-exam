@@ -1,4 +1,5 @@
 import Bubble from '../../Common/Bubble/Bubble';
+import OMRSection from '../OMRSection';
 
 interface NumberSelectorProps {
     tens: number | null;
@@ -7,12 +8,7 @@ interface NumberSelectorProps {
 }
 
 const NumberSelector = ({ tens, units, onChange }: NumberSelectorProps) => (
-    <div className="inline-flex flex-col border-[1.5px] border-omr-border">
-        {/* 헤더 */}
-        <div className="flex items-center justify-center h-10 border-b-[1.5px] border-omr-border text-[17px] font-semibold text-omr-num">
-            번호
-        </div>
-
+    <OMRSection title="번호" headerClassName="text-[17px]">
         <div className="flex divide-x-[1.5px] divide-omr-border">
             <div className="px-2 py-2.5">
                 <Bubble
@@ -33,7 +29,7 @@ const NumberSelector = ({ tens, units, onChange }: NumberSelectorProps) => (
                 />
             </div>
         </div>
-    </div>
+    </OMRSection>
 );
 
 export default NumberSelector;

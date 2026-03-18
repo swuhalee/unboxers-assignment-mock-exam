@@ -1,4 +1,5 @@
 import ObjectiveColumn from './ObjectiveColumn';
+import OMRSection from '../../OMR/OMRSection';
 
 const PER_COL = 10;
 
@@ -12,12 +13,7 @@ const ObjectiveGrid = ({ total, answers, onMark }: ObjectiveGridProps) => {
     const columnCount = Math.ceil(total / PER_COL);
 
     return (
-        <div className="inline-flex flex-col border-[1.5px] border-omr-border">
-            {/* 헤더 */}
-            <div className="flex items-center justify-center h-10 border-b-[1.5px] border-omr-border text-2xl font-semibold text-omr-num tracking-[0.5em]">
-                객관식답안
-            </div>
-
+        <OMRSection title="객관식답안" headerClassName="text-2xl tracking-[0.5em]">
             <div className="inline-flex flex-row">
                 {Array.from({ length: columnCount }, (_, colIdx) => (
                     <ObjectiveColumn
@@ -31,7 +27,7 @@ const ObjectiveGrid = ({ total, answers, onMark }: ObjectiveGridProps) => {
                     />
                 ))}
             </div>
-        </div>
+        </OMRSection>
     );
 };
 

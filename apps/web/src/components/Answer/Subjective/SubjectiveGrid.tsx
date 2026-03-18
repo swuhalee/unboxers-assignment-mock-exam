@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import OMRSection from '../../OMR/OMRSection';
 
 // 수능 규격 주관식 9문항, 모의고사도 최대 12문항 이내로 출제된다고 가정하여 상수화
 const MAX_SLOTS = 12;
@@ -14,12 +15,7 @@ interface SubjectiveGridProps {
 // answers/activeQ 미변경 시 12칸 재계산 방지
 const SubjectiveGrid = memo(({ total, answers, activeQ, onSelect, renderPlaceholder }: SubjectiveGridProps) => {
     return (
-        <div className="inline-flex flex-col w-90 border-[1.5px] border-omr-border">
-            {/* 헤더 */}
-            <div className="flex items-center justify-center h-10 border-b-[1.5px] border-omr-border text-2xl font-semibold text-omr-num tracking-[0.5em]">
-                주관식답안
-            </div>
-
+        <OMRSection title="주관식답안" className="w-90" headerClassName="text-2xl tracking-[0.5em]">
             <div className="flex flex-1 flex-col">
                 {Array.from({ length: MAX_SLOTS }, (_, i) => {
                     const qNum = i + 1;
@@ -57,7 +53,7 @@ const SubjectiveGrid = memo(({ total, answers, activeQ, onSelect, renderPlacehol
                     );
                 })}
             </div>
-        </div>
+        </OMRSection>
     );
 });
 

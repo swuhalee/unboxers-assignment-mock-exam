@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import Bubble from '../../Common/Bubble/Bubble';
+import OMRSection from '../OMRSection';
 
 interface GradeSelectorProps {
     value: number | null;
@@ -7,13 +8,9 @@ interface GradeSelectorProps {
 }
 
 // grade 미변경 시 OMRCard 리렌더 전파 차단
+// 헤더: 피그마 요구사항에 따라 세로쓰기 적용
 const GradeSelector = memo(({ value, onChange }: GradeSelectorProps) => (
-    <div className="inline-flex flex-col border-[1.5px] border-omr-border">
-        {/* 헤더: 피그마 요구사항에 따라 세로쓰기 적용 */}
-        <div className="flex items-center justify-center h-10 border-b-[1.5px] border-omr-border text-[14px] font-semibold text-omr-num [writing-mode:vertical-rl]">
-            학년
-        </div>
-
+    <OMRSection title="학년" headerClassName="text-[14px] [writing-mode:vertical-rl]">
         <div className="flex flex-col gap-3 px-2 py-2.5">
             <Bubble
                 count={3}
@@ -22,7 +19,7 @@ const GradeSelector = memo(({ value, onChange }: GradeSelectorProps) => (
                 direction="col"
             />
         </div>
-    </div>
+    </OMRSection>
 ));
 
 export default GradeSelector;
