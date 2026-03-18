@@ -78,7 +78,7 @@ const ObjectiveSimulation = () => {
 
             <div className="flex flex-col items-center gap-1 px-6 text-center">
                 <p className="text-[28px] font-bold leading-snug">{title}</p>
-                <p className="text-[28px] leading-snug">{subtitle}</p>
+                <p className="text-[28px] font-bold leading-snug">{subtitle}</p>
             </div>
         </div>
     );
