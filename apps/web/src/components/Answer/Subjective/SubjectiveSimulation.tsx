@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import SubjectiveGrid from './SubjectiveGrid';
 import Card from '../../Common/Card/Card';
-import Keypad from '../../Common/Keypad/Keypad';
-import KeypadAnimation from '../../Common/Keypad/KeypadAnimation';
+import Keypad from '../Keypad/Keypad';
+import KeypadAnimation from '../Keypad/KeypadAnimation';
 import GuideTooltip from '../../Common/Guide/GuideTooltip';
 
 const TOTAL = 12;

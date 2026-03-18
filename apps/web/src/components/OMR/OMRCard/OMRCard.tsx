@@ -4,8 +4,8 @@ import Card from '../../Common/Card/Card';
 import OMRHeader from '../OMRHeader/OMRHeader';
 import GradeSelector from '../GradeSelector/GradeSelector';
 import NumberSelector from '../NumberSelector/NumberSelector';
-import KeypadAnimation from '../../Common/Keypad/KeypadAnimation';
-import Keypad from '../../Common/Keypad/Keypad';
+import KeypadAnimation from '../../Answer/Keypad/KeypadAnimation';
+import Keypad from '../../Answer/Keypad/Keypad';
 import { useExamStore } from '@/store/examStore';
 
 interface OMRCardProps {
