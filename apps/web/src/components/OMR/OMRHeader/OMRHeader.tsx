@@ -47,7 +47,7 @@ const OMRHeader = (props: OMRHeaderProps) => {
                                 value={values[field]}
                                 onChange={(e) => setters[field]?.(e.target.value)}
                                 placeholder={'placeholder' in rest ? rest.placeholder : undefined}
-                                className="w-full bg-transparent outline-none text-center text-[17px] font-bold text-omr-num placeholder:font-semibold placeholder:text-omr-num/40"
+                                className="w-full bg-transparent text-center text-[17px] font-bold text-omr-num placeholder:font-semibold placeholder:text-omr-num/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-sub focus-visible:ring-offset-1"
                             />
                         ) : (
                             values[field]

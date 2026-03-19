@@ -17,6 +17,7 @@ const ACTIVE_GRADIENT: Record<ActiveButtonVariant, string> = {
 
 const ActiveButton = ({ children, isActive, variant = 'dark', className = '', onClick }: ActiveButtonProps) => (
     <button
+        type="button"
         onClick={onClick}
         className={`flex items-center justify-center px-2 py-4 rounded-xl shadow-button transition-colors ${
             isActive ? `${ACTIVE_GRADIENT[variant]} text-button-text-active` : 'bg-button-bg text-button-text-inactive'

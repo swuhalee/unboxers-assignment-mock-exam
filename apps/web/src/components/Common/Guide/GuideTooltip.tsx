@@ -17,7 +17,7 @@ const GuideTooltip = ({ message = "다음으로 넘어가려면 직접 해보세
                 }}
                 className="text-black"
             >
-                <img src={arrowIcon} alt="툴팁" />
+                <img src={arrowIcon} alt="" aria-hidden="true" />
             </motion.div>
 
             {/* 텍스트 영역 */}
