@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "rm -rf dist && tsc -p tsconfig.json",
-    "start": "node dist/src/index.js",
+    "build": "echo 'no build step'",
+    "start": "tsx src/index.ts",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts"
