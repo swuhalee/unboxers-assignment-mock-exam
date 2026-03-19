@@ -1,24 +1,34 @@
-import ObjectiveSimulation from "./components/Answer/Objective/ObjectiveSimulation";
-import SubjectiveSimulation from "./components/Answer/Subjective/SubjectiveSimulation";
-import Timer from "./components/Common/Timer/Timer";
-import OMRCard from "./components/OMR/OMRCard/OMRCard"
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import { Toaster } from 'sonner'
+import TutorialLayout from './pages/TutorialPage/TutorialLayout'
+import TutorialPage from './pages/TutorialPage'
+import ExamPage from './pages/ExamPage'
+import ResultPage from './pages/ResultPage'
+import FadeRoute from './components/Common/Route/FadeRoute'
 
-function App() {
+function AppRoutes() {
+  const location = useLocation()
 
   return (
-    <div className="flex flex-col justify-start items-center min-h-screen py-30 gap-10">
-      <OMRCard
-        exam="TEN-UP 모의고사"
-        subject="공통수학2"
-        supervisor="신희철"
-        totalMultiple={20}
-        totalShort={11}
-      />
-      <ObjectiveSimulation />
-      <SubjectiveSimulation />
-      <Timer totalSeconds={197} examDurationMinutes={60} mode="before" />
-      <Timer totalSeconds={60} examDurationMinutes={1} mode="during" />
-    </div>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route element={<TutorialLayout />}>
+          <Route path="/" element={<FadeRoute element={<TutorialPage />} />} />
+        </Route>
+        <Route path="/exam" element={<FadeRoute element={<ExamPage />} />} />
+        <Route path="/exam/result" element={<FadeRoute element={<ResultPage />} />} />
+      </Routes>
+    </AnimatePresence>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Toaster position="top-center" richColors />
+      <AppRoutes />
+    </BrowserRouter>
   )
 }
 
