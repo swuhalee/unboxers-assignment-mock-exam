@@ -51,10 +51,21 @@ export const useExamStore = create<ExamStore>((set) => ({
             const next = current.includes(choice)
                 ? current.filter((c) => c !== choice)
                 : [...current, choice];
+            if (next.length === 0) {
+                const { [qNum]: _removed, ...rest } = s.objectiveAnswers;
+                return { objectiveAnswers: rest };
+            }
             return { objectiveAnswers: { ...s.objectiveAnswers, [qNum]: next } };
         }),
     setSubjectiveAnswer: (qNum, updater) =>
-        set((s) => ({ subjectiveAnswers: { ...s.subjectiveAnswers, [qNum]: updater(s.subjectiveAnswers[qNum] ?? '') } })),
+        set((s) => {
+            const next = updater(s.subjectiveAnswers[qNum] ?? '');
+            if (next === '') {
+                const { [qNum]: _removed, ...rest } = s.subjectiveAnswers;
+                return { subjectiveAnswers: rest };
+            }
+            return { subjectiveAnswers: { ...s.subjectiveAnswers, [qNum]: next } };
+        }),
     setActiveQ: (q) => set({ activeQ: q }),
 }));
 
@@ -65,19 +76,23 @@ export const buildExamPayload = () => {
         name,
         school,
         grade,
-        studentNumber: (tens ?? 0) * 10 + (units ?? 0),
+        studentNumber: tens !== null && units !== null ? tens * 10 + units : null,
         seatNumber,
         answers: [
-            ...Object.entries(objectiveAnswers).map(([num, answer]) => ({
-                answerType: 'objective' as const,
-                number: Number(num),
-                answer,
-            })),
-            ...Object.entries(subjectiveAnswers).map(([num, answer]) => ({
-                answerType: 'subjective' as const,
-                number: Number(num),
-                answer,
-            })),
+            ...Object.entries(objectiveAnswers)
+                .filter(([, answer]) => answer.length > 0)
+                .map(([num, answer]) => ({
+                    answerType: 'objective' as const,
+                    number: Number(num),
+                    answer,
+                })),
+            ...Object.entries(subjectiveAnswers)
+                .filter(([, answer]) => answer !== '')
+                .map(([num, answer]) => ({
+                    answerType: 'subjective' as const,
+                    number: Number(num),
+                    answer,
+                })),
         ],
     };
 };
