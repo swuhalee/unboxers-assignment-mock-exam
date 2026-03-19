@@ -1,9 +1,13 @@
+import { memo } from 'react';
 import StaticButton from '../../Common/Button/StaticButton';
 
-const KeyButton = ({ label, onClick, className = '' }: { label: string; onClick: () => void; className?: string }) => (
-    <StaticButton onClick={onClick} className={`h-14 text-[22px] font-semibold text-omr-answer ${className}`}>
+const KeyButton = memo(({ label, onClick, className = '' }: { label: string; onClick: (key: string) => void; className?: string }) => (
+    <StaticButton onClick={() => onClick(label)} className={`h-14 text-[22px] font-semibold text-text-sub ${className}`}>
         {label}
     </StaticButton>
-);
+));
+
+KeyButton.displayName = 'KeyButton';
+
 
 export default KeyButton;

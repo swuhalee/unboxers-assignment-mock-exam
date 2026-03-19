@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { HINT_TEXT } from './constants';
+
+const HINT_TEXT = '숫자만 입력 · 단위 제외 · 분수는 -3/2';
 
 interface KeypadDisplayProps {
     value: string;
@@ -23,5 +24,7 @@ const KeypadDisplay = memo(({ value, questionNumber }: KeypadDisplayProps) => (
         </p>
     </>
 ));
+
+KeypadDisplay.displayName = 'KeypadDisplay';
 
 export default KeypadDisplay;
