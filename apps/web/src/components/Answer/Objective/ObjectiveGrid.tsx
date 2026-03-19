@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import ObjectiveColumn from './ObjectiveColumn';
 import OMRSection from '../../OMR/OMRSection';
 
@@ -9,7 +10,7 @@ interface ObjectiveGridProps {
     onMark: (qNum: number, choice: number) => void;
 }
 
-const ObjectiveGrid = ({ total, answers, onMark }: ObjectiveGridProps) => {
+const ObjectiveGrid = memo(({ total, answers, onMark }: ObjectiveGridProps) => {
     const columnCount = Math.ceil(total / PER_COL);
 
     return (
@@ -29,6 +30,8 @@ const ObjectiveGrid = ({ total, answers, onMark }: ObjectiveGridProps) => {
             </div>
         </OMRSection>
     );
-};
+});
+
+ObjectiveGrid.displayName = 'ObjectiveGrid';
 
 export default ObjectiveGrid;

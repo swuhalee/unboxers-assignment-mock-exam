@@ -1,5 +1,17 @@
 import { memo } from 'react';
-import { FEATURE_CHIPS, INPUT_EXAMPLES } from './constants';
+
+const FEATURE_CHIPS = [
+    { label: '소수점', symbol: '.' },
+    { label: '분수', symbol: '/' },
+    { label: '음수', symbol: '-' },
+] as const;
+
+const INPUT_EXAMPLES = [
+    { description: '제3사분면', input: '3' },
+    { description: '3,700만원', input: '37000000' },
+    { description: '마이너스 2/3', input: '-2/3' },
+    { description: '95%', input: '95' },
+] as const;
 
 const KeypadGuide = memo(() => (
     <>
@@ -30,5 +42,7 @@ const KeypadGuide = memo(() => (
         </div>
     </>
 ));
+
+KeypadGuide.displayName = 'KeypadGuide';
 
 export default KeypadGuide;

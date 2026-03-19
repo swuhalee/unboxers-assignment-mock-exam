@@ -15,7 +15,7 @@ enum AnswerType {
 model Exam {
   id             String     @id @default(cuid())
   title          String
-  description    String?
+  subject        String?
   supervisorName String
   questions      Question[]
 }
@@ -25,7 +25,7 @@ model Question {
   examId        String
   answerType    AnswerType
   number        Int
-  correctAnswer Int
+  correctAnswer String
   score         Float
   exam          Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
 

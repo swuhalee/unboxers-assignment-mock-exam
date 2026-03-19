@@ -5,7 +5,14 @@ import deleteIcon from '@/assets/delete.svg';
 import KeyButton from './KeyButton';
 import KeypadDisplay from './KeypadDisplay';
 import KeypadGuide from './KeypadGuide';
-import { SPECIAL_KEYS, NUMBER_KEYS } from './constants';
+
+const SPECIAL_KEYS = ['.', '/', '-'] as const;
+
+const NUMBER_KEYS = [
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    ['7', '8', '9'],
+] as const;
 
 interface KeypadProps {
     value: string;
@@ -32,7 +39,7 @@ const Keypad = ({ value, questionNumber, onChange, onConfirm, showGuide = true }
             {/* 특수 키 */}
             <div className="grid grid-cols-3 gap-3">
                 {SPECIAL_KEYS.map((key) => (
-                    <KeyButton key={key} label={key} onClick={() => handleKey(key)} />
+                    <KeyButton key={key} label={key} onClick={handleKey} />
                 ))}
             </div>
 
@@ -40,14 +47,14 @@ const Keypad = ({ value, questionNumber, onChange, onConfirm, showGuide = true }
             {NUMBER_KEYS.map((row) => (
                 <div key={row[0]} className="grid grid-cols-3 gap-3">
                     {row.map((key) => (
-                        <KeyButton key={key} label={key} onClick={() => handleKey(key)} />
+                        <KeyButton key={key} label={key} onClick={handleKey} />
                     ))}
                 </div>
             ))}
 
             {/* 0 + 백스페이스 */}
             <div className="grid grid-cols-3 gap-3">
-                <KeyButton label="0" onClick={() => handleKey('0')} className="col-span-2" />
+                <KeyButton label="0" onClick={handleKey} className="col-span-2" />
                 <StaticButton onClick={handleDelete} className="h-14">
                     <img src={deleteIcon} alt="지우기" />
                 </StaticButton>

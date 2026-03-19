@@ -57,4 +57,6 @@ const SubjectiveGrid = memo(({ total, answers, activeQ, onSelect, renderPlacehol
     );
 });
 
+SubjectiveGrid.displayName = 'SubjectiveGrid';
+
 export default SubjectiveGrid;

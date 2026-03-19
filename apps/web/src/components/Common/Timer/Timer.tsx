@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface TimerProps {
     totalSeconds: number
     examDurationMinutes?: number
     mode?: 'before' | 'during'
+    onEnd?: () => void
 }
 
-const Timer = ({ totalSeconds, examDurationMinutes, mode = 'before' }: TimerProps) => {
+const Timer = ({ totalSeconds, examDurationMinutes, mode = 'before', onEnd }: TimerProps) => {
     const [deadline, setDeadline] = useState(() => Date.now() + totalSeconds * 1000)
     const [remaining, setRemaining] = useState(totalSeconds)
+    const onEndRef = useRef(onEnd)
+    onEndRef.current = onEnd
 
     useEffect(() => {
         setDeadline(Date.now() + totalSeconds * 1000)
@@ -19,7 +23,10 @@ const Timer = ({ totalSeconds, examDurationMinutes, mode = 'before' }: TimerProp
         const interval = setInterval(() => {
             const next = Math.max(0, Math.ceil((deadline - Date.now()) / 1000))
             setRemaining(next)
-            if (next === 0) clearInterval(interval)
+            if (next === 0) {
+                clearInterval(interval)
+                onEndRef.current?.()
+            }
         }, 250)
 
         return () => clearInterval(interval)
@@ -38,23 +45,31 @@ const Timer = ({ totalSeconds, examDurationMinutes, mode = 'before' }: TimerProp
     return (
         <div className="w-full">
             <div className="flex items-end justify-between mb-2">
-                <div>
-                    {mode === 'before' ? (
-                        <>
-                            <p className="text-[17px] font-extrabold text-text-sub mb-2">시험이 곧 시작됩니다</p>
-                            <p className={`text-[48px] font-extrabold leading-tight transition-colors duration-300 ${urgentClass}`}>
-                                {countdownText} 뒤 시작
-                            </p>
-                        </>
-                    ) : (
-                        <>
-                            <p className="text-[17px] font-extrabold text-text-sub mb-2">시험이 곧 종료됩니다</p>
-                            <p className={`text-[48px] font-extrabold leading-tight transition-colors duration-300 ${urgentClass}`}>
-                                {countdownText} 뒤에 자동으로 제출됩니다. 답안을 모두 입력해주세요.
-                            </p>
-                        </>
-                    )}
-                </div>
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={mode}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                    >
+                        {mode === 'before' ? (
+                            <>
+                                <p className="text-[17px] font-extrabold text-text-sub mb-2">시험이 곧 시작됩니다</p>
+                                <p className={`text-[36px] font-extrabold leading-tight transition-colors duration-300 ${urgentClass}`}>
+                                    {countdownText} 뒤 시작
+                                </p>
+                            </>
+                        ) : (
+                            <>
+                                <p className="text-[17px] font-extrabold text-text-sub mb-2">시험이 곧 종료됩니다</p>
+                                <p className={`text-[36px] font-extrabold leading-tight transition-colors duration-300 ${urgentClass}`}>
+                                    {countdownText} 뒤에 자동으로 제출됩니다. 답안을 모두 입력해주세요.
+                                </p>
+                            </>
+                        )}
+                    </motion.div>
+                </AnimatePresence>
                 {examDurationMinutes != null && (
                     <p className="text-[17px] font-semibold text-text-sub">시험 시간 {examDurationMinutes}분</p>
                 )}

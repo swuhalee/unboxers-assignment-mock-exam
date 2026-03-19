@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import arrowIcon from '@/assets/arrow.svg';
+import arrowIcon from '@/assets/top_arrow.svg';
 
 interface GuideTooltipProps {
     message?: string;
