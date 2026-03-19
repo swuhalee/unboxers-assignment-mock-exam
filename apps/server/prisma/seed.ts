@@ -37,7 +37,7 @@ async function main() {
   await prisma.exam.create({
     data: {
       title: "모의고사 응시 테스트",
-      description: "모의고사 웹앱 과제용으로 구성한 시험입니다.",
+      subject: "공통수학2",
       supervisorName: "배이수",
       questions: {
         create: mockExamQuestions.map((question) => ({

@@ -15,7 +15,7 @@ enum AnswerType {
 model Exam {
   id             String     @id @default(cuid())
   title          String
-  description    String?
+  subject        String?
   supervisorName String
   questions      Question[]
 }
