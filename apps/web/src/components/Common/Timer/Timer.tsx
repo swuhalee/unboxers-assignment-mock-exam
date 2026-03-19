@@ -7,21 +7,23 @@ interface TimerProps {
 }
 
 const Timer = ({ totalSeconds, examDurationMinutes, mode = 'before' }: TimerProps) => {
+    const [deadline, setDeadline] = useState(() => Date.now() + totalSeconds * 1000)
     const [remaining, setRemaining] = useState(totalSeconds)
 
     useEffect(() => {
+        setDeadline(Date.now() + totalSeconds * 1000)
         setRemaining(totalSeconds)
     }, [totalSeconds])
 
     useEffect(() => {
-        if (remaining <= 0) return
-
         const interval = setInterval(() => {
-            setRemaining((prev) => Math.max(0, prev - 1))
-        }, 1000)
+            const next = Math.max(0, Math.ceil((deadline - Date.now()) / 1000))
+            setRemaining(next)
+            if (next === 0) clearInterval(interval)
+        }, 250)
 
         return () => clearInterval(interval)
-    }, [remaining])
+    }, [deadline])
 
     const minutes = Math.floor(remaining / 60)
     const seconds = remaining % 60
