@@ -8,8 +8,9 @@ import { errorResponse, successResponse } from "../lib/response";
 
 function arraysEqual(a: number[], b: number[]): boolean {
   if (a.length !== b.length) return false;
-  const sorted = (arr: number[]) => [...arr].sort((x, y) => x - y);
-  return sorted(a).every((v, i) => v === sorted(b)[i]);
+  const sortedA = [...a].sort((x, y) => x - y);
+  const sortedB = [...b].sort((x, y) => x - y);
+  return sortedA.every((v, i) => v === sortedB[i]);
 }
 
 const gradeAnswersSchema = z.object({
@@ -35,8 +36,8 @@ const gradeAnswersSchema = z.object({
 });
 
 type SubmittedAnswer =
-  | { answerType: AnswerType.objective; number: number; answer: number[] }
-  | { answerType: AnswerType.subjective; number: number; answer: number };
+  | { answerType: typeof AnswerType.objective; number: number; answer: number[] }
+  | { answerType: typeof AnswerType.subjective; number: number; answer: number };
 
 function buildGradeResponse(
   exam: {
@@ -44,7 +45,7 @@ function buildGradeResponse(
     questions: Array<{
       answerType: AnswerType;
       number: number;
-      correctAnswer: number;
+      correctAnswer: string;
       score: number;
     }>;
   },
@@ -77,8 +78,8 @@ function buildGradeResponse(
 
     const isCorrect =
       question.answerType === AnswerType.objective
-        ? arraysEqual(submittedAnswer as number[], [question.correctAnswer])
-        : submittedAnswer === question.correctAnswer;
+        ? arraysEqual(submittedAnswer as number[], JSON.parse(question.correctAnswer) as number[])
+        : submittedAnswer === parseInt(question.correctAnswer, 10);
 
     if (isCorrect) {
       correctCount += 1;
