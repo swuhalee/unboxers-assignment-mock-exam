@@ -16,7 +16,13 @@ interface KeypadProps {
 }
 
 const Keypad = ({ value, questionNumber, onChange, onConfirm, showGuide = true }: KeypadProps) => {
-    const handleKey = useCallback((key: string) => onChange((prev) => prev + key), [onChange]);
+    const handleKey = useCallback((key: string) => onChange((prev) => {
+        if (key === '-' && prev.includes('-')) return prev;
+        if (key === '/' && prev.includes('/')) return prev;
+        if (key === '.' && prev.includes('.')) return prev;
+        if (key === '.' && prev.endsWith('-')) return prev;
+        return prev + key;
+    }), [onChange]);
     const handleDelete = useCallback(() => onChange((prev) => prev.slice(0, -1)), [onChange]);
 
     return (
@@ -49,7 +55,7 @@ const Keypad = ({ value, questionNumber, onChange, onConfirm, showGuide = true }
 
             <ActiveButton
                 isActive={value.length > 0}
-                onClick={onConfirm}
+                onClick={value.length > 0 ? onConfirm : undefined}
                 variant='blue'
                 className="w-full h-14 text-[17px] font-semibold"
             >
